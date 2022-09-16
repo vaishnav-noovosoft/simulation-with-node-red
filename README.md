@@ -1,15 +1,51 @@
-# Exercise 1
-## Histogram
-Clone the repository and make the histogram using utility functions in draw.js file using the data in histogram_data.js file
-- Make new file histogram.js and write code there, do not modify draw.js 
-- the graph should be in svg2
+# Simulation Exercise (Nodered-Firebase-Js)
 
-The histogram should look somewhat like this:
-![plot](./images/histogram.png)
+Exercise:
+- Simulate data from nodered for Voltage and Temperature
+- Push data into firebase using http node in nodered
+- Data in firebase should look like this
+> Voltage : {
+'1663306125368' : 35
+'1663306125390' : 32
+> .
+> .
+> .
+> }
+
+> Temperature : {
+'266330612536' : 27
+'366330612539' : 21
+> .
+> .
+> .
+> }`
+
+- Once the data starts coming into the firebase realtime database, Fetch it in your javascript code and plot following charts
+
+Charts to be shown:
+- Chart 1 - Realtime data of voltage and temperature in one graph
+- Chart 2 - Average data per 3 minutes of voltage
+- Chart 3 - Average data per 3 minutes of Temperature
+
+
+Initial Readings:
+
+- https://www.youtube.com/watch?v=3AR432bguOY (To get overview about nodered)
+- https://nodered.org/docs/tutorials/first-flow
+- https://nodered.org/docs/user-guide/concepts
+- https://nodered.org/docs/user-guide/editor
+- https://nodered.org/docs/user-guide/nodes
+
+- https://mkt-sampath97.medium.com/connect-iot-system-with-firebase-realtime-database-891114b1b9e5
 
 
 
-# Exercise 2
+
+
+
+
+
+# Prerequisite
 ## Control plot
 > The chart that we are making is called a
 > **statistical process control chart**,
@@ -57,5 +93,3 @@ The histogram should look somewhat like this:
 >- Violation of rule 6 would look something like below 👇
 ![rule_6_violation](./images/rule_6_violation.png)
 >🧐 Notice how violating point are highlighted in red.
-
-
