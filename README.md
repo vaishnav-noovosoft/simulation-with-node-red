@@ -1,95 +1,65 @@
-# Simulation Exercise (Nodered-Firebase-Js) 
+# Simulation Exercise (Node-RED-Firebase-JS) 
 
-Exercise:
-- Simulate data from nodered for Voltage and Temperature
-- Push data into firebase using http node in nodered
-- Data in firebase should look like this
-> Voltage : {
-'1663306125368' : 35
-'1663306125390' : 32
-> .
-> .
-> .
-> }
+### Exercise:
 
-> Temperature : {
-'266330612536' : 27
-'366330612539' : 21
-> .
-> .
-> .
-> }`
+- Simulate a live time series voltage & temperature data stream from [Node-RED](https://nodered.org).
+- Push the said data stream from Node-RED to [Google Firebase Realtime Database](https://firebase.google.com/docs/database) using any HTTP client in Node-RED.
+- The data stored in Firebase needs to have the following structure:
 
-- Once the data starts coming into the firebase realtime database, Fetch it in your javascript code and plot following charts
+   - **Voltage**: 
+     
+     The `key` for the stored json data should be the epoch at which the data was generated and the voltage
+     `value` generated at that time.
+    
+     ```ts
+     interface Voltage {
+         [timestamp: string]: number;
+     }
+     ```
 
-Charts to be shown:
-- Chart 1 - Realtime data of voltage and temperature in one graph
-- Chart 2 - Average data per 3 minutes of voltage
-- Chart 3 - Average data per 3 minutes of Temperature
+     Example:
 
+     ```json
+     {
+         "1663306125368": 35,
+         "1663306125390": 32
+     }
+     ```
 
-Initial Readings:
+  - **Temperature**:
 
-- https://www.youtube.com/watch?v=3AR432bguOY (To get overview about nodered)
-- https://nodered.org/docs/tutorials/first-flow
-- https://nodered.org/docs/user-guide/concepts
-- https://nodered.org/docs/user-guide/editor
-- https://nodered.org/docs/user-guide/nodes
+    The `key` for the stored json data should be the epoch at which the data was generated and the temperature
+    `value` generated at that time.
 
-- https://mkt-sampath97.medium.com/connect-iot-system-with-firebase-realtime-database-891114b1b9e5
+    ```ts
+    interface Temperature {
+        [timestamp: string]: number;
+    }
+    ```
 
+    Example:
 
+    ```json
+    {
+        "1663306125368": 27,
+        "1663306125390": 21
+    }
+    ```
 
+- Once the data starts coming into Firebase, keep fetching it in your app and plot following live charts:
+  1. Realtime data of voltage and temperature in one graph.
+  2. Average data per 3 minutes of voltage.
+  3. Average data per 3 minutes of Temperature.
 
+### Initial Readings:
 
+- [Node-RED: Fundamentals - YouTube tutorial](https://www.youtube.com/watch?v=3AR432bguOY) (To get overview about Node-RED)
+- [Node-RED: Creating your first flow](https://nodered.org/docs/tutorials/first-flow)
+- [Node-RED: Concepts](https://nodered.org/docs/user-guide/concepts)
+- [Node-RED: Editor guide](https://nodered.org/docs/user-guide/editor)
+- [Node-RED: Core nodes](https://nodered.org/docs/user-guide/nodes)
+- [Firebase & Node-RED: How to integrate?](https://mkt-sampath97.medium.com/connect-iot-system-with-firebase-realtime-database-891114b1b9e5)
 
+## Prerequisite
 
-
-# Prerequisite
-## Control plot
-> The chart that we are making is called a
-> **statistical process control chart**,
-> or sometimes just short **control chart**.</br>
-> It is a standard tool used by quality managers
-> in a manufacturing environment for instance,
-> let's assume we are producing a chocolate bar.</br>
-> We should aim for a target weight of 50g,
-> but we can still accept maybe everything between 48g and 52g
-> often they are not going to weight each and every chocolate bar,
-> instead on regular intervals they will take a batch, weigh them
-> and take the average
-> that average is plotted on the chart, as we are doing now
-> so here we have target = 50, lower control limit = 48 and upper control limit = 52
-> if an average is outside the limits it indicates an issues with the production line
-> but there could be also other issues, even if all values are within the limits
-> for instance if we see all values above the target, we should adjust the machine,
-> because the bars are consistently too heavy.
-
-* [This video explains the process visually.](https://www.youtube.com/watch?v=Ugcb7Vlp0Ts)
-* We can divide the plot into different zones
-   look [here](https://www.sixsigma-institute.org/Six_Sigma_DMAIC_Process_Control_Phase_What_Are_Control_Charts.php)
-* [here](https://www.sixsigma-institute.org/Six_Sigma_DMAIC_Process_Control_Phase_SPC_Out_Of_Control.php) are 7 rules
-   that you will be implementing.
-
-> we have,</br>
-> TARGET = 40</br>
-> UPPER ZONE C: 40 - 41</br>
-> UPPER ZONE B: 41- 42</br>
-> UPPER ZONE A: 43 - 43</br>
-> UCL: 43</br>
-> LOWER ZONE C: 39 - 40</br>
-> LOWER ZONE B: 38- 39</br>
-> LOWER ZONE A: 37 - 38</br>
-> LCL: 37 (edited)</br>
-
-- Make new file control_plot.js and write code in there using the data in samples.js file
-> - The final plot should look something like below 👇
-![plot](./images/control_plot.png)
-
-📌Add 7 different buttons to highlight the points been violated.
-
-📌Add a button to clear the plot to the initial state.
-
->- Violation of rule 6 would look something like below 👇
-![rule_6_violation](./images/rule_6_violation.png)
->🧐 Notice how violating point are highlighted in red.
+[Control plot exercise](https://github.com/noovosoft/histogram-and-control-plot)
