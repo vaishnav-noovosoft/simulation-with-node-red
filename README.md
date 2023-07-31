@@ -1,7 +1,5 @@
 # Simulation Exercise (Node-RED-Firebase-JS) 
 
-### Exercise:
-
 - Simulate a live time series voltage & temperature data stream from [Node-RED](https://nodered.org).
 - Push the said data stream from Node-RED to [Google Firebase Realtime Database](https://firebase.google.com/docs/database) using any HTTP client in Node-RED.
 - The data stored in Firebase needs to have the following structure:
@@ -62,4 +60,4 @@
 
 ## Prerequisite
 
-[Control plot exercise](https://github.com/noovosoft/histogram-and-control-plot)
+[Control plot exercise](https://github.com/noovosoft/histogram-and-control-plot#control-plot-chat)
