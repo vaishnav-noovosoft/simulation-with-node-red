@@ -60,4 +60,4 @@
 
 ## Prerequisite
 
-[Control plot exercise](https://github.com/noovosoft/histogram-and-control-plot#control-plot-chat)
+[Control plot exercise](https://github.com/noovosoft/javascript-exercises)
