@@ -17,6 +17,33 @@ function drawLine(svg, {x1 = 0, y1 = 0, x2 = 0, y2 = 0, stroke = 'black', stroke
     svg.appendChild(element);
 }
 
+
+function drawDataLine(svg, {x1 = 0, y1 = 0, x2 = 0, y2 = 0, stroke = 'black', strokeWidth = 1, strokeType = 'solid', id= null}) {
+    let element = id ? document.getElementById(id) : null;
+
+    if(!element) {
+        element = document.createElementNS(svgNS, 'line');
+    }
+
+    if(id) {
+        element.setAttributeNS(null, 'id', id);
+    }
+
+    element.setAttributeNS(null, 'x1', x1.toString());
+    element.setAttributeNS(null, 'y1', y1.toString());
+    element.setAttributeNS(null, 'x2', x2.toString());
+    element.setAttributeNS(null, 'y2', y2.toString());
+    element.setAttributeNS(null, 'stroke', stroke.toString());
+    element.setAttributeNS(null, 'stroke-width', strokeWidth.toString());
+    element.setAttributeNS(null, 'shape-rendering', 'crispEdges');
+
+    if (strokeType === 'dashed') {
+        element.setAttributeNS(null, 'stroke-dasharray', '4');
+    }
+
+    svg.appendChild(element);
+}
+
 function drawCircle(svg, {cx = 0, cy = 0, r = 0, fill = 'black', id = null}) {
     let element = id ? document.getElementById(id) : null;
 
