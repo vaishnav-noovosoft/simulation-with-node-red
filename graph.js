@@ -1,5 +1,5 @@
 class Graph {
-    constructor({svg}) {
+    constructor({svg, xPoints = 0, yPoints= 0, yLimit = 0}) {
         this.svg = svg;
         this.temperatureData = [];
         this.voltageData = [];
@@ -9,14 +9,18 @@ class Graph {
         this.xEnd = 1200;
         this.yEnd = 480;
 
-        this.xPoints = 60;
-        this.yPoints = 12;
+        this.xPoints = xPoints;
+        this.yPoints = yPoints;
 
         this.tickWidth = 5;
         this.xDistance = (this.xEnd - (this.xStart * 2)) / this.xPoints;
         this.yDistance = (this.yEnd - (this.yStart * 2)) / this.yPoints;
 
-        this.yLimit = 32;
+        this.xDifference = 1;
+        this.yLimit = yLimit;
+        this.yDifference = this.yLimit / this.yPoints;
+
+        this.normalData = []
     }
 
     getLimitLineY(limit) {
@@ -52,7 +56,7 @@ class Graph {
     }
 
     plotTemperature(temperatureData = []) {
-        this.temperatureData = Object.entries(temperatureData).slice(-60);
+        this.temperatureData = Object.entries(temperatureData).slice(-this.xPoints);
 
         this.plotPoints(this.temperatureData.map((cur, index) => {
             return {
@@ -66,7 +70,7 @@ class Graph {
     }
 
     plotVoltage(voltageData = []) {
-        this.voltageData = Object.entries(voltageData).slice(-60);
+        this.voltageData = Object.entries(voltageData).slice(-this.xPoints);
 
         this.plotPoints(this.voltageData.map((cur, index) => {
             return {
@@ -74,6 +78,32 @@ class Graph {
                 y: this.yStart + ((this.yLimit - cur[1]) / (this.yLimit / this.yPoints)) * this.yDistance,
                 color: "red",
                 id: "volt-" + (index + 1)
+            }
+        }));
+    }
+
+    plotOnX(data = []) {
+        this.normalData = data;
+        this.plotPoints(this.normalData.map((cur, index) => {
+            return {
+                x: this.xStart + (this.xDistance * index) + this.xDistance,
+                y: this.yStart + ((this.yLimit - cur) / (this.yLimit / this.yPoints)) * this.yDistance,
+                color: "blue",
+                id: "data-" + (index + 1)
+            }
+        }));
+    }
+
+    plotPointOnX(point) {
+        this.normalData.push(point);
+        this.normalData.shift();
+
+        this.plotPoints(this.normalData.map((cur, index) => {
+            return {
+                x: this.xStart + (this.xDistance * index) + this.xDistance,
+                y: this.yStart + ((this.yLimit - cur) / (this.yLimit / this.yPoints)) * this.yDistance,
+                color: "blue",
+                id: "data-" + (index + 1)
             }
         }));
     }
@@ -114,7 +144,7 @@ class Graph {
                 {
                     x: this.xStart + (this.xDistance.toFixed(1) * i) - 5,
                     y: this.yEnd - 20,
-                    text: String(i)
+                    text: String(i * this.xDifference)
                 });
         }
 
@@ -134,7 +164,7 @@ class Graph {
                 {
                     x: this.xStart - 30,
                     y: this.yStart + (this.yDistance.toFixed(1) * i) + 5,
-                    text: String(((this.yLimit / this.yPoints) * (this.yPoints - i)).toFixed(1))
+                    text: String((this.yDifference * (this.yPoints - i)).toFixed(1))
                 });
         }
     }
