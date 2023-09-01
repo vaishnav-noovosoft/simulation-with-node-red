@@ -56,7 +56,8 @@ class Graph {
     }
 
     plotTemperature(temperatureData = []) {
-        this.temperatureData = Object.entries(temperatureData).slice(-this.xPoints);
+        this.temperatureData = Object.entries(temperatureData);
+        if(this.temperatureData.length !== this.xPoints) return;
 
         this.plotPoints(this.temperatureData.map((cur, index) => {
             return {
@@ -70,7 +71,8 @@ class Graph {
     }
 
     plotVoltage(voltageData = []) {
-        this.voltageData = Object.entries(voltageData).slice(-this.xPoints);
+        this.voltageData = Object.entries(voltageData);
+        if(this.voltageData.length !== this.xPoints) return;
 
         this.plotPoints(this.voltageData.map((cur, index) => {
             return {
@@ -82,30 +84,28 @@ class Graph {
         }));
     }
 
-    plotOnX(data = []) {
-        this.normalData = data;
-        this.plotPoints(this.normalData.map((cur, index) => {
+    plotOnXHelper(dataArrToPlot = [], purpose = '') {
+        this.plotPoints(dataArrToPlot.map((cur, index) => {
             return {
                 x: this.xStart + (this.xDistance * index) + this.xDistance,
                 y: this.yStart + ((this.yLimit - cur) / (this.yLimit / this.yPoints)) * this.yDistance,
                 color: "blue",
-                id: "data-" + (index + 1)
+                id: "data-" + purpose + (index + 1)
             }
         }));
     }
 
-    plotPointOnX(point) {
+    plotOnX(data = [], purpose = '') {
+        this.normalData = data;
+
+        this.plotOnXHelper(this.normalData, purpose);
+    }
+
+    plotPointOnX(point, purpose = '') {
         this.normalData.push(point);
         this.normalData.shift();
 
-        this.plotPoints(this.normalData.map((cur, index) => {
-            return {
-                x: this.xStart + (this.xDistance * index) + this.xDistance,
-                y: this.yStart + ((this.yLimit - cur) / (this.yLimit / this.yPoints)) * this.yDistance,
-                color: "blue",
-                id: "data-" + (index + 1)
-            }
-        }));
+        this.plotOnXHelper(this.normalData, purpose);
     }
 
     draw() {
